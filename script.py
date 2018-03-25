@@ -1,7 +1,12 @@
+# -*- encoding: utf-8 -*-
+
 import requests
 import json
 import pandas as pd
 import urllib2
+import pymongo
+from pymongo import MongoClient
+import os
 
 numero_episode = str(403249)
 url_get = 'https://services.radio-canada.ca/hackathon/neuro/v1/episodes/' + numero_episode
@@ -57,3 +62,18 @@ df['id_episode']=numero_episode
 
 print '----------------'
 print df
+
+#sauvegarde dans la mongodb par 131012
+##ATTENTION! NE FONCTIONNE QU'EN LOCAL (sur le serveur)
+MONGODB_HOST = os.environ.get('MONGODB_HOST', 'localhost')
+MONGODB_PORT = os.environ.get('MONGODB_PORT', 27017)
+MONGODB_DB = os.environ.get('MONGODB_DB', 'podcast')
+
+mongo_client = pymongo.MongoClient(MONGODB_HOST, MONGODB_PORT)
+db = mongo_client[MONGODB_DB]
+
+collection = db.test2
+
+collection.insert_many(df.to_dict('records'))
+
+print('insertion dans bd terminee')
