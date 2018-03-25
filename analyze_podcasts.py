@@ -1,28 +1,25 @@
 import time
 
-# from gensim.summarization import keywords
-# from polyglot.text import Text
+from gensim.summarization import keywords
+from polyglot.text import Text
 from db import connect_db
-
 
 DELAY_CHECK_NEW_PODCAST = 10
 
 
 def extract_keywords(text):
-    # kw = keywords(text, ratio=0.1, lemmatize=True).split('\n')
-    # str1 = ' '.join(kw)
-    # text = Text(str1, hint_language_code='en')  # switch to fr
-    # filtre = text.pos_tags
+    kw = keywords(text, ratio=0.5, lemmatize=True).split('\n')
+    str1 = ' '.join(kw)
+    text = Text(str1, hint_language_code='fr')  # switch to fr
+    filtre = text.pos_tags
 
-    # resultat = []
+    resultat = []
 
-    # for word in filtre:
-    #     if word[1] == 'NOUN':
-    #         resultat.append(word[0])
+    for word in filtre:
+        if word[1] == 'NOUN' and len(word[0]) > 4:
+            resultat.append(word[0])
 
-    # print(resultat)
-    # return resultat
-    return ['Techno', 'Voiture']
+    return resultat
 
 
 def fill_tags(words):
@@ -41,9 +38,6 @@ def fill_tags(words):
     for tag in tags_to_add:
         db.tags.insert({'label': tag})
 
-    tags = db.tags.find()
-    print(list(tags))
-
 
 def check_podcasts():
     print('Looking for new podcasts')
@@ -57,7 +51,11 @@ def check_podcasts():
         if 'tags' not in podcast:
             print('Extract words for podcast')
             # Extract keywords from summary
-            keywords = extract_keywords(podcast['summary'])
+            keywords = []
+            try:
+                keywords = extract_keywords(podcast['summary'])
+            except Exception:
+                pass
             # Add keywords to tags list
             fill_tags(keywords)
             # Add keywords to podcast tags
