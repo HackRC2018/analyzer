@@ -34,10 +34,10 @@ python script.py
 
 # Docker
 ```
-docker build -t transcripter .
+docker build -t analyzer .
 docker run -d \
-    --name transcripter \
+    --name analyzer \
     --link podcast-mongo:mongo \
     -e 'MONGODB_HOST=mongo' \
-    transcripter
+    analyzer
 ```

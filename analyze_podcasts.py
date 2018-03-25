@@ -1,6 +1,6 @@
 import time
 
-from gensim.summarization import keywords
+# from gensim.summarization import keywords
 # from polyglot.text import Text
 from db import connect_db
 
