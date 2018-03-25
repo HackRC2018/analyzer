@@ -1,7 +1,7 @@
 # Install
 ```
 # Create a virtualenv
-virtualenv venv
+virtualenv venv -p python
 
 # Activate it
 source venv/bin/activate
