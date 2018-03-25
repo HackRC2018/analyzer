@@ -9,11 +9,35 @@ source venv/bin/activate
 # Install depenndencies
 pip install -r requirements.txt
 ```
-#Download french data for polyglot
-source setup_post_requirements.sh
 
+# Download french data for polyglot
+```
+source setup_post_requirements.sh
+```
+
+# Linux
+```
+sudo apt-get install python-numpy libicu-dev
+```
+
+# Mac
+```
+brew install icu4c
+brew link icu4c --force
+pip install pyicu
+```
 
 # Launch the script
 ```
 python script.py
+```
+
+# Docker
+```
+docker build -t transcripter .
+docker run -d \
+    --name transcripter \
+    --link podcast-mongo:mongo \
+    -e 'MONGODB_HOST=mongo' \
+    transcripter
 ```
