@@ -46,14 +46,16 @@ def fill_tags(words):
 
 
 def check_podcasts():
+    print('Looking for new podcasts')
 
     # Get podcasts from DB
     db = connect_db()
     podcasts = db.podcasts.find()
 
-    # Loop onn podcasts
+    # Loop on podcasts
     for podcast in podcasts:
         if 'tags' not in podcast:
+            print('Extract words for podcast')
             # Extract keywords from summary
             keywords = extract_keywords(podcast['summary'])
             # Add keywords to tags list

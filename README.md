@@ -1,4 +1,4 @@
-# Install
+# Installationn
 ```
 # Create a virtualenv
 virtualenv venv -p python
@@ -34,10 +34,18 @@ python script.py
 
 # Docker
 ```
-docker build -t analyzer .
+# building
+docker build -t william57m/analyzer .
+
+# run analyzer
 docker run -d \
     --name analyzer \
     --link podcast-mongo:mongo \
     -e 'MONGODB_HOST=mongo' \
-    analyzer
+    william57m/analyzer
+```
+
+# Deploy on Azure
+```
+docker pull william57m/analyzer
 ```
