@@ -37,10 +37,7 @@ def fetch_data_emission(numero_episode):
 
     df.columns = ['id_section', 'title', 'durationInSeconds',  'broadcastedFirstTimeAt', 'summary', 'image_url']
     df = df[df.title.str.contains("Bulletin") == False]
-    df['fin_seq'] = pd.to_numeric(df.durationInSeconds, errors='ignore').cumsum()
-    df['deb_seq'] = df['fin_seq']-pd.to_numeric(df.durationInSeconds, errors='ignore')
-    df['deb_seq'] = df['deb_seq']+1
-    df.columns = ['id_section', 'title', 'durationInSeconds', 'broadcastedFirstTimeAt', 'summary', 'image_url',  'fin_seq', 'debut_seq']
+
     df['title_emission'] = title_emission
     df['id_emission'] = id_emission
     df['id_episode'] = numero_episode
